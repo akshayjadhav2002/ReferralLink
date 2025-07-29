@@ -62,12 +62,12 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db.insert(users).values(insertUser).returning();
+    const [user] = await db.insert(users).values(insertUser as any).returning();
     return user;
   }
 
   async updateUser(id: string, updateUser: Partial<InsertUser>): Promise<User | undefined> {
-    const [user] = await db.update(users).set(updateUser).where(eq(users.id, id)).returning();
+    const [user] = await db.update(users).set(updateUser as any).where(eq(users.id, id)).returning();
     return user || undefined;
   }
 
@@ -78,12 +78,12 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createProfile(insertProfile: InsertProfile): Promise<Profile> {
-    const [profile] = await db.insert(profiles).values(insertProfile).returning();
+    const [profile] = await db.insert(profiles).values(insertProfile as any).returning();
     return profile;
   }
 
   async updateProfile(userId: string, updateProfile: Partial<InsertProfile>): Promise<Profile | undefined> {
-    const [profile] = await db.update(profiles).set(updateProfile).where(eq(profiles.userId, userId)).returning();
+    const [profile] = await db.update(profiles).set(updateProfile as any).where(eq(profiles.userId, userId)).returning();
     return profile || undefined;
   }
 
@@ -120,22 +120,22 @@ export class DatabaseStorage implements IStorage {
     industry?: string;
     companyId?: string;
   } = {}): Promise<Job[]> {
-    let query = db.select().from(jobs).where(eq(jobs.status, "active"));
+    const conditions = [eq(jobs.status, "active")];
 
     if (filters.search) {
-      query = query.where(ilike(jobs.title, `%${filters.search}%`));
+      conditions.push(ilike(jobs.title, `%${filters.search}%`));
     }
     if (filters.location) {
-      query = query.where(ilike(jobs.location, `%${filters.location}%`));
+      conditions.push(ilike(jobs.location, `%${filters.location}%`));
     }
     if (filters.workStyle) {
-      query = query.where(eq(jobs.workStyle, filters.workStyle as any));
+      conditions.push(eq(jobs.workStyle, filters.workStyle as any));
     }
     if (filters.companyId) {
-      query = query.where(eq(jobs.companyId, filters.companyId));
+      conditions.push(eq(jobs.companyId, filters.companyId));
     }
 
-    return await query.orderBy(desc(jobs.createdAt));
+    return await db.select().from(jobs).where(and(...conditions)).orderBy(desc(jobs.createdAt));
   }
 
   async getJobsByReferrer(referrerId: string): Promise<Job[]> {
@@ -143,12 +143,12 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createJob(insertJob: InsertJob): Promise<Job> {
-    const [job] = await db.insert(jobs).values(insertJob).returning();
+    const [job] = await db.insert(jobs).values(insertJob as any).returning();
     return job;
   }
 
   async updateJob(id: string, updateJob: Partial<InsertJob>): Promise<Job | undefined> {
-    const [job] = await db.update(jobs).set(updateJob).where(eq(jobs.id, id)).returning();
+    const [job] = await db.update(jobs).set(updateJob as any).where(eq(jobs.id, id)).returning();
     return job || undefined;
   }
 
@@ -176,12 +176,12 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createApplication(insertApplication: InsertApplication): Promise<Application> {
-    const [application] = await db.insert(applications).values(insertApplication).returning();
+    const [application] = await db.insert(applications).values(insertApplication as any).returning();
     return application;
   }
 
   async updateApplication(id: string, updateApplication: Partial<InsertApplication>): Promise<Application | undefined> {
-    const [application] = await db.update(applications).set(updateApplication).where(eq(applications.id, id)).returning();
+    const [application] = await db.update(applications).set(updateApplication as any).where(eq(applications.id, id)).returning();
     return application || undefined;
   }
 }

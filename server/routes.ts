@@ -293,8 +293,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }).parse(req.body);
 
       const application = await storage.updateApplication(req.params.id, { 
-        status,
-        updatedAt: new Date()
+        status
       });
 
       if (!application) {
