@@ -5,7 +5,7 @@ import {
   type Company, type InsertCompany,
   type Job, type InsertJob,
   type Application, type InsertApplication
-} from "../shared/schema.js";
+} from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc, ilike, inArray } from "drizzle-orm";
 
