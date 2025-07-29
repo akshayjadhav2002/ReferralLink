@@ -2,22 +2,24 @@
 
 ## Overview
 
-ReferralLink is a comprehensive job referral marketplace that connects job seekers with employees and HR professionals. The platform facilitates job referrals by allowing company employees to post opportunities, candidates to apply through referrals, and HR teams to manage their company's referral pipeline. The application is built as a full-stack web platform with a React frontend and Express.js backend.
+ReferralLink is a comprehensive job referral marketplace that connects job seekers with employees and HR professionals. The platform facilitates job referrals by allowing company employees to post opportunities, candidates to apply through referrals, and HR teams to manage their company's referral pipeline. The application is built as a full-stack web platform with a vanilla JavaScript frontend and Express.js backend.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Technology preference: Plain JavaScript (no React, no TypeScript - user finds TypeScript confusing)
+Styling preference: Bootstrap for UI components and responsive design
 
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React 18 with TypeScript
-- **UI Library**: Radix UI components with shadcn/ui design system
-- **Styling**: Tailwind CSS with custom CSS variables for theming
-- **State Management**: TanStack Query (React Query) for server state management
-- **Routing**: Wouter for client-side routing
-- **Form Handling**: React Hook Form with Zod validation
-- **Build Tool**: Vite for development and production builds
+- **Framework**: Vanilla JavaScript (no React or TypeScript)
+- **UI Library**: Bootstrap 5 with Font Awesome icons
+- **Styling**: CSS3 with custom variables and Bootstrap responsive classes
+- **State Management**: Native JavaScript with localStorage for authentication
+- **Routing**: Custom client-side routing system
+- **Form Handling**: Native HTML forms with JavaScript validation
+- **Build Tool**: Direct file serving (no build process required)
 
 ### Backend Architecture
 - **Framework**: Express.js with TypeScript
@@ -28,10 +30,10 @@ Preferred communication style: Simple, everyday language.
 - **Session Management**: JWT tokens stored in localStorage
 
 ### Development Setup
-- **Monorepo Structure**: Single repository with client, server, and shared code
-- **Module System**: ES Modules throughout the application
-- **Development Server**: Vite dev server with Express API integration
-- **Hot Reload**: Vite HMR for frontend development
+- **Simple Structure**: Public directory with static files, server directory with API
+- **Module System**: ES Modules for server, vanilla JavaScript for frontend
+- **Development Server**: Express server serving static files and API
+- **Hot Reload**: Manual browser refresh (no complex build process)
 
 ## Key Components
 
