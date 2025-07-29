@@ -41,11 +41,7 @@ mode = "parallel"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run build"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm run server"
+args = "npm run dev"
 
 [[ports]]
 localPort = 5000
