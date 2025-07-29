@@ -1,0 +1,149 @@
+You are an expert full-stack software architect and lead developer.
+
+Objective: Your task is to generate a comprehensive development plan and architectural blueprint for a new web-based platform called "ReferralLink". This platform will connect job candidates with employees and HR professionals who are looking to refer talent for open positions at their companies.
+
+Your output should be detailed enough for a development team to begin work. Please structure your response according to the sections below.
+
+1. Project Overview & Core Concept
+Project Title: ReferralLink
+
+Elevator Pitch: ReferralLink is a dedicated marketplace for job referrals. It empowers company employees and HR to post referral opportunities, and allows qualified candidates to apply directly through these trusted, internal sources, increasing their visibility and chances of getting hired.
+
+2. User Personas & Roles
+Define the platform's functionality based on these three primary user roles:
+
+The Candidate (Job Seeker):
+
+Goal: To find and apply for jobs through a referral to stand out from other applicants.
+
+Permissions: Can create a profile, upload a resume, search for referral postings, apply to jobs, and track their application status.
+
+The Referrer (Employee / Working Professional):
+
+Goal: To refer talented candidates for open roles at their company and potentially earn a referral bonus.
+
+Permissions: Can create an account linked to their company, post a referral link/opening, view candidates who have applied through their post, and track the status of their referrals (e.g., Applied, In Review, Hired).
+
+The HR / Company Admin:
+
+Goal: To manage the company's presence, oversee all referral postings from their employees, and manage the candidate pipeline originating from the platform.
+
+Permissions: Can create/manage the official company profile, approve/manage job posts from their company's employees, view all applicants for all company jobs, manage user roles within their organization, and access analytics.
+
+3. Core Feature Breakdown
+3.1. Features for Candidates
+Authentication: Secure sign-up and login using Email/Password, Google, and LinkedIn.
+
+Profile Dashboard:
+
+Upload and manage multiple versions of their resume (e.g., PDF, DOCX).
+
+Input key information: skills (tag-based), years of experience, education, portfolio/GitHub link.
+
+Job Discovery:
+
+A powerful search bar with filters for: Job Title, Company, Location, Industry, Work Style (Remote/Hybrid/On-site).
+
+A main feed showing the latest and most relevant referral opportunities.
+
+Application Process:
+
+A simple "one-click" apply button that submits their default profile and resume.
+
+Option to add a short, personalized message to the referrer.
+
+Application Tracking: A dedicated page to view all submitted applications and their real-time status (e.g., Application Sent, Viewed by Referrer, Submitted to ATS, Interviewing).
+
+Notifications: Email and in-app notifications for application status updates.
+
+3.2. Features for Referrers (Employees)
+Authentication & Verification: Sign-up requires a company email address for verification to link them to their employer.
+
+Referral Posting:
+
+A simple form to post a referral.
+
+Fields for Job Title, Job Description (or a link to the official careers page), Location, and relevant Skills.
+
+The platform automatically generates a unique, shareable link for each referral post.
+
+Referrer Dashboard:
+
+View all their active referral posts.
+
+See a list of candidates who have applied through their posts.
+
+Ability to review a candidate's profile and resume.
+
+A simple function to forward selected candidates to the company's internal HR system (or mark them as "Recommended").
+
+Status Tracking: Track the status of their referral bonus for each candidate (e.g., Hired, Bonus Pending, Bonus Paid). This would be updated by the Company Admin.
+
+3.3. Features for HR / Company Admins
+Company Profile Management: Create and edit the company's public-facing page with logo, description, and links.
+
+Job & Referrer Management:
+
+View all referral posts created by employees of their company.
+
+Ability to approve, edit, or deactivate posts.
+
+Applicant Tracking System (ATS) Lite:
+
+A central dashboard to view all candidates who have applied to any job at the company via the platform.
+
+Ability to filter candidates by job, referrer, etc.
+
+Update the application status (In Review, Rejected, Hired), which notifies both the candidate and the referrer.
+
+Analytics: Basic reporting on the number of applications, hires from the platform, and top-referring employees.
+
+4. Technical Specifications & Architecture
+Suggested Tech Stack (MERN):
+
+Frontend: React.js or Next.js (for Server-Side Rendering and SEO benefits) with Tailwind CSS for styling.
+
+Backend: Node.js with Express.js framework.
+
+Database: MongoDB (using Mongoose ODM) for its flexible schema, suitable for user profiles and job listings.
+
+Authentication: JWT (JSON Web Tokens) for secure API sessions.
+
+Database Schema Design: Please outline the main database collections (or tables if using SQL):
+
+Users: fields for email, password_hash, role (candidate, referrer), profile_id, etc.
+
+Profiles: fields for full_name, resume_url, skills, experience, education. Linked to a user.
+
+Companies: fields for company_name, description, website, logo_url.
+
+Jobs: fields for title, description, location, company_id, status (open, closed).
+
+Applications: fields for job_id, candidate_id, referrer_id, status, application_date.
+
+API Architecture: Design a RESTful API. Key endpoint groups should include: /auth, /users, /profiles, /jobs, /applications, /companies.
+
+UI/UX Principles: The design must be clean, intuitive, modern, and fully mobile-responsive. Prioritize a seamless user experience for all roles.
+
+Deployment: Plan for deployment on a cloud platform like AWS, Google Cloud, or Vercel.
+
+5. Development Roadmap (Phased Approach)
+Phase 1: Minimum Viable Product (MVP)
+
+Implement user authentication for all three roles.
+
+Develop core functionality for Candidates to create a profile, search for jobs, and apply.
+
+Develop core functionality for Referrers to post a referral opportunity.
+
+Build a basic application tracking view for both Candidates and Referrers.
+
+Phase 2: V1 Launch
+
+Build out the full HR/Company Admin dashboard and functionality.
+
+Implement advanced search filters.
+
+Set up email and in-app notification systems.
+
+Refine UI/UX based on initial feedback.
