@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import { z } from "zod";
-import { insertUserSchema, insertProfileSchema, insertJobSchema, insertApplicationSchema } from "@shared/schema";
+import { insertUserSchema, insertProfileSchema, insertJobSchema, insertApplicationSchema } from "../shared/schema.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
