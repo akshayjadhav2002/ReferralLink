@@ -11,7 +11,7 @@ function Navbar() {
   };
 
   const isActive = (path) => {
-    return location.pathname === path ? 'active' : '';
+    return location.pathname === path ? ' ' : '';
   };
 
   return (

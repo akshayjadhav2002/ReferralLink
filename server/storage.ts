@@ -1,13 +1,12 @@
-import { 
+import {
   users, profiles, companies, jobs, applications,
-  type User, type InsertUser, 
+  type User, type InsertUser,
   type Profile, type InsertProfile,
   type Company, type InsertCompany,
   type Job, type InsertJob,
   type Application, type InsertApplication
 } from "@shared/schema";
-import { db } from "./db";
-import { eq, and, desc, ilike, inArray } from "drizzle-orm";
+import { db, eq, and, desc, ilike, inArray, mockData } from "./db";
 
 export interface IStorage {
   // User methods
@@ -29,10 +28,10 @@ export interface IStorage {
 
   // Job methods
   getJob(id: string): Promise<Job | undefined>;
-  getJobs(filters?: { 
-    search?: string; 
-    location?: string; 
-    workStyle?: string; 
+  getJobs(filters?: {
+    search?: string;
+    location?: string;
+    workStyle?: string;
     industry?: string;
     companyId?: string;
   }): Promise<Job[]>;
@@ -94,7 +93,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getCompanies(): Promise<Company[]> {
-    return await db.select().from(companies).orderBy(desc(companies.createdAt));
+    return mockData.companies.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   async createCompany(insertCompany: InsertCompany): Promise<Company> {
@@ -110,32 +109,42 @@ export class DatabaseStorage implements IStorage {
   // Job methods
   async getJob(id: string): Promise<Job | undefined> {
     const [job] = await db.select().from(jobs).where(eq(jobs.id, id));
-    return job || undefined;
+      return job || undefined; 
   }
 
-  async getJobs(filters: { 
-    search?: string; 
-    location?: string; 
-    workStyle?: string; 
+  async getJobs (filters: {
+    search? : string;
+    location?:  string;
+    workStyle?: string;
     industry?: string;
     companyId?: string;
   } = {}): Promise<Job[]> {
-    const conditions = [eq(jobs.status, "active")];
+    // Return mock jobs data
+    let filteredJobs = mockData.jobs;
 
     if (filters.search) {
-      conditions.push(ilike(jobs.title, `%${filters.search}%`));
+      filteredJ obs = filteredJobs.filter(job =>
+        job.title.toLowerCase().includes(filters.search!.toLowerCase()) ||
+        job.description.toLowerCase().includes(filters.search!.toLowerCase())
+      );
     }
     if (filters.location) {
-      conditions.push(ilike(jobs.location, `%${filters.location}%`));
+      filteredJ obs = filteredJobs.filter(job =>
+        job.location.toLowerCase().includes(filters.location!.toLowerCase())
+      );
     }
     if (filters.workStyle) {
-      conditions.push(eq(jobs.workStyle, filters.workStyle as any));
+      filteredJ obs = filteredJobs.filter(job =>
+        job.workStyle === filters.workStyle
+      );
     }
     if (filters.companyId) {
-      conditions.push(eq(jobs.companyId, filters.companyId));
+      filteredJ obs = filteredJobs.filter(job =>
+        job.companyId === filters.companyId
+      );
     }
 
-    return await db.select().from(jobs).where(and(...conditions)).orderBy(desc(jobs.createdAt));
+    return filteredJobs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   async getJobsByReferrer(referrerId: string): Promise<Job[]> {
@@ -169,9 +178,9 @@ export class DatabaseStorage implements IStorage {
   async getApplicationsByCompany(companyId: string): Promise<Application[]> {
     const companyJobs = await db.select({ id: jobs.id }).from(jobs).where(eq(jobs.companyId, companyId));
     const jobIds = companyJobs.map(job => job.id);
-    
+
     if (jobIds.length === 0) return [];
-    
+
     return await db.select().from(applications).where(inArray(applications.jobId, jobIds)).orderBy(desc(applications.appliedAt));
   }
 
